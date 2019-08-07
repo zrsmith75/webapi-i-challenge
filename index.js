@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 
 // other files
 const db = require("./data/db.js");
@@ -9,6 +10,7 @@ const port = 4001;
 
 // middleware
 server.use(express.json());
+server.use(cors());
 
 // request handlers ***********
 
