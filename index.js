@@ -31,6 +31,23 @@ server.get("/api/users", (req, res) => {
 });
 
 // GET /api/users/:id
+server.get("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+
+  db.findById(id)
+    .then(user => {
+      user
+        ? res.json(user)
+        : res.status(404).json({
+            message: "The user with the specified ID does not exist."
+          });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "The user information could not be retrieved."
+      });
+    });
+});
 
 // POST /api/users
 server.post("/api/users", (req, res) => {
@@ -38,22 +55,11 @@ server.post("/api/users", (req, res) => {
   console.log("new user", newUser);
   db.insert(newUser)
     .then(user => {
-      // if(user) {
-      //   res.json(user)
-      // } else {
-      //   res.status(400).json({
-      //     errorMessage: "Please provide name and bio for the user."
-      //   })
-      // }
-
-      if (!user.name || !user.bio) {
-        res.status(400).json({
-          errorMessage: "Please provide name and bio for the user."
-        });
-      } else {
-        res.json(user);
-        console.log("Posted", user);
-      }
+      !user.name || !user.bio
+        ? res
+            .status(400)
+            .json({ errorMessage: "Please provide name and bio for the user." })
+        : res.status(201).json(user);
     })
     .catch(err => {
       res.status(500).json({
