@@ -76,11 +76,9 @@ server.delete("/api/users/:id", (req, res) => {
     .then(deleteUser => {
       deleteUser
         ? res.json(deleteUser)
-        : res
-            .status(404)
-            .json({
-              message: "The user with the specified ID does not exist."
-            });
+        : res.status(404).json({
+            message: "The user with the specified ID does not exist."
+          });
     })
     .catch(err => {
       res.status(500).json({
@@ -90,6 +88,27 @@ server.delete("/api/users/:id", (req, res) => {
 });
 
 // PUT /api/users/:id
+server.put("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  db.update(id, changes)
+    .then(updated => {
+      if (updated) {
+        res.json(updated);
+        // } else if () {
+      } else {
+        res.status(400).json({
+          errorMessage: "Please provide name and bio for the user."
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "The user information could not be modified."
+      });
+    });
+});
 
 // LISTEN
 server.listen(port, () => {
