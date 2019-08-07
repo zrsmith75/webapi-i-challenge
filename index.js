@@ -21,7 +21,7 @@ server.use(express.json());
 server.get("/api/users", (req, res) => {
   db.find()
     .then(users => {
-      res.json(users);
+      res.status(200).json(users);
     })
     .catch(err => {
       res.status(500).json({
@@ -37,7 +37,7 @@ server.get("/api/users/:id", (req, res) => {
   db.findById(id)
     .then(user => {
       user
-        ? res.json(user)
+        ? res.status(200).json(user)
         : res.status(404).json({
             message: "The user with the specified ID does not exist."
           });
@@ -59,7 +59,7 @@ server.post("/api/users", (req, res) => {
         ? res
             .status(400)
             .json({ errorMessage: "Please provide name and bio for the user." })
-        : res.status(201).json(user);
+        : res.json(user);
     })
     .catch(err => {
       res.status(500).json({
@@ -75,7 +75,7 @@ server.delete("/api/users/:id", (req, res) => {
   db.remove(id)
     .then(deleteUser => {
       deleteUser
-        ? res.json(deleteUser)
+        ? res.status(200).json(deleteUser)
         : res.status(404).json({
             message: "The user with the specified ID does not exist."
           });
@@ -95,7 +95,7 @@ server.put("/api/users/:id", (req, res) => {
   db.update(id, changes)
     .then(updated => {
       if (updated) {
-        res.json(updated);
+        res.status(201).json(updated);
         // } else if () {
       } else {
         res.status(400).json({
