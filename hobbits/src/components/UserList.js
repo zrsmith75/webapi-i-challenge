@@ -19,6 +19,7 @@ export default class UserList extends Component {
           <div className="badge">
             <h2>{user.name}</h2>
             <p>{user.bio}</p>
+            <p>Id: {user.id}</p>
           </div>
         ))}
       </div>

@@ -32,7 +32,7 @@ server.get("/api/users", (req, res) => {
     });
 });
 
-// GET /api/users/:id
+// GET /api/users/ :id
 server.get("/api/users/:id", (req, res) => {
   const { id } = req.params;
 
