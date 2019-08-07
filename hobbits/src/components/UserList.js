@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { User } from "./User";
 import axios from "axios";
 
 export default class UserList extends Component {
@@ -17,7 +16,10 @@ export default class UserList extends Component {
     return (
       <div>
         {this.state.users.map(user => (
-          <User user={user} key={user.id} />
+          <div className="badge">
+            <h2>{user.name}</h2>
+            <p>{user.bio}</p>
+          </div>
         ))}
       </div>
     );
