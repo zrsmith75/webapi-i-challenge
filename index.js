@@ -36,8 +36,25 @@ server.get("/api/users", (req, res) => {
 server.post("/api/users", (req, res) => {
   const newUser = req.body;
   console.log("new user", newUser);
-  db.add(newUser)
-    .then()
+  db.insert(newUser)
+    .then(user => {
+      // if(user) {
+      //   res.json(user)
+      // } else {
+      //   res.status(400).json({
+      //     errorMessage: "Please provide name and bio for the user."
+      //   })
+      // }
+
+      if (!user.name || !user.bio) {
+        res.status(400).json({
+          errorMessage: "Please provide name and bio for the user."
+        });
+      } else {
+        res.json(user);
+        console.log("Posted", user);
+      }
+    })
     .catch(err => {
       res.status(500).json({
         error: "There was an error while saving the user to the database"
