@@ -57,7 +57,7 @@ server.post("/api/users", (req, res) => {
   console.log("new user", newUser);
   db.insert(newUser)
     .then(user => {
-      !user.name || !user.bio
+      user.name.length === 0 || user.bio.length === 0
         ? res
             .status(400)
             .json({ errorMessage: "Please provide name and bio for the user." })
