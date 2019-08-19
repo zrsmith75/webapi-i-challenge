@@ -1,7 +1,8 @@
+// requried
 const express = require("express");
 const cors = require("cors");
 
-// other files
+// other files including db
 const db = require("./data/db.js");
 
 // global objects
@@ -34,6 +35,7 @@ server.get("/api/users", (req, res) => {
 
 // GET /api/users/ :id
 server.get("/api/users/:id", (req, res) => {
+  // use params and deconstruct id
   const { id } = req.params;
 
   db.findById(id)
@@ -53,6 +55,7 @@ server.get("/api/users/:id", (req, res) => {
 
 // POST /api/users
 server.post("/api/users", (req, res) => {
+  // Uses req.body to access body content
   const newUser = req.body;
   console.log("new user", newUser);
   db.insert(newUser)
@@ -72,6 +75,7 @@ server.post("/api/users", (req, res) => {
 
 // DELETE /api/users/:id
 server.delete("/api/users/:id", (req, res) => {
+  // use params to deconstruct id
   const { id } = req.params;
 
   db.remove(id)
@@ -112,7 +116,7 @@ server.put("/api/users/:id", (req, res) => {
     });
 });
 
-// LISTENER ~ Last thing on page
+// LISTENER ~ Last thing on page and required for index, even if server.js is used
 server.listen(port, () => {
   console.log(`Server is listening on port ${port} ...`);
 });

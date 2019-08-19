@@ -4,6 +4,7 @@ import UserList from "./components/UserList";
 import { Welcome } from "./components/Welcome";
 import "./App.css";
 
+// Main component
 function App() {
   return (
     <div className="App">

@@ -6,6 +6,8 @@ export default class UserList extends Component {
     users: []
   };
 
+  //  Get user data from the API, note uses Cors in API side
+  // Should modify to use a const PORT in future
   componentDidMount() {
     axios.get(`http://127.0.0.1:4001/api/users`).then(res => {
       this.setState({ users: res.data });
